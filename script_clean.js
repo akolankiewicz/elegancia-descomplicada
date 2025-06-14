@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    window.pixelId = "684df7b78d1ec0dcc2fcbf59";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+
     setTimeout(function() {
         const preloader = document.querySelector('.preloader');
         preloader.classList.add('fade-out');
