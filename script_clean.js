@@ -1,22 +1,70 @@
-document.addEventListener('DOMContentLoaded', function() {
-    window.pixelId = "684df7b78d1ec0dcc2fcbf59";
-    var a = document.createElement("script");
-    a.setAttribute("async", "");
-    a.setAttribute("defer", "");
-    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-    document.head.appendChild(a);
+document.addEventListener('DOMContentLoaded', () => {
+    const faqQuestions = document.querySelectorAll('.faq-question');
 
-    setTimeout(function() {
-        const preloader = document.querySelector('.preloader');
-        preloader.classList.add('fade-out');
-        
-        setTimeout(function() {
-            document.querySelectorAll('.header .reveal-left, .header .reveal-right').forEach(el => {
-                el.classList.add('active');
-            });
-        }, 500);
-    }, 1350);
-    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqAnswer = question.nextElementSibling;
+            const icon = question.querySelector('.toggle-icon');
+
+            faqAnswer.classList.toggle('open');
+
+            if (faqAnswer.classList.contains('open')) {
+                icon.textContent = '−';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.textContent = '+';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        });
+    });
+
+    const track = document.querySelector('.testimonial-track');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const cards = document.querySelectorAll('.testimonial-card');
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    function updateCarousel() {
+        const cardWidth = cards[0].offsetWidth + 20; // 20px = gap
+        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+    }
+
+    function startAutoSlide() {
+        clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(() => {
+            if (currentIndex === cards.length - 1) {
+                currentIndex = 0;
+            } else {
+                currentIndex++;
+            }
+            updateCarousel();
+        }, 5000);
+    }
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex === cards.length - 1) {
+            currentIndex = 0;
+        } else {
+            currentIndex++;
+        }
+        updateCarousel();
+        startAutoSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex === 0) {
+            currentIndex = cards.length - 1;
+        } else {
+            currentIndex--;
+        }
+        updateCarousel();
+        startAutoSlide();
+    });
+
+    window.addEventListener('resize', updateCarousel);
+
+    startAutoSlide();
     function isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
         return (
@@ -70,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', animateOnScroll);
     
-    setTimeout(animateOnScroll, 2600);
+    setTimeout(animateOnScroll, 100);
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
