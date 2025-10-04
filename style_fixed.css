@@ -253,8 +253,8 @@ section {
 
 .header {
     padding: clamp(60px, 10vw, 80px) 0;
-    /* background-color: var(--background-color); */
-    background-color: white;
+    background-color: var(--background-color);
+    /* background-color: white; */
     position: relative;
     overflow: hidden;
     width: 100%;
